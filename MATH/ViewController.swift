@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
     
     @IBOutlet weak var screenHouse: UITextField!
@@ -32,6 +32,41 @@ class ViewController: UIViewController {
     @IBOutlet weak var actualUnitLabel: UILabel!
     @IBOutlet weak var actualCommissionLabel: UILabel!
     
+    var q : Double! = 0.0
+    var unitPrice : Double! = 0.0
+    var unitSold : Double! = 0.0
+    var scrn: Double! = 0.0
+    var screenH : Double! = 0.0
+    var shipCost : Double! = 0.0
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        if textField == quantity {
+            if let quantityTextField = Double (quantity.text!) {
+                q = quantityTextField
+            }
+        } else if textField == unit {
+            if let unitTextField = Double (unit.text!) {
+                unitPrice = unitTextField
+            }
+        } else if textField == priceSold {
+            if let priceSoldTextField = Double (priceSold.text!) {
+                unitSold = priceSoldTextField
+            }
+        } else if textField == screenCharged {
+            if let screenChargedTextField = Double (screenCharged.text!) {
+                scrn = screenChargedTextField
+            }
+        } else if textField == screenHouse {
+            if let screenHouseTextField = Double (screenHouse.text!) {
+                screenH = screenHouseTextField
+            }
+        } else if textField == shipping {
+            if let shippingTextField = Double (shipping.text!) {
+                shipCost = shippingTextField
+            }
+        }
+    }
+    
     //calculates the unit price according to the reference price and the discount
     @IBAction func calculateUnitPrice(sender: AnyObject) {
         let referencePrice = Double(reference.text!)
@@ -42,18 +77,7 @@ class ViewController: UIViewController {
     
     //calculates the company cost
     func calculateCompanyCost() -> Double {
-        var unitPrice = Double(unit.text!)
-        if unitPrice == nil {
-            unitPrice = 0
-        }
-        var q = Double(quantity.text!)
-        if q == nil {
-            q = 0
-        }
-        var screenH = Double(screenHouse.text!)
-        if screenH == nil {
-            screenH = 0
-        }
+        
         var shipC = Double(shipCo.text!)
         if shipC == nil {
             shipC = 0
@@ -64,18 +88,6 @@ class ViewController: UIViewController {
     
     //calculates the subTotal
     func calculateSubTotal() -> Double {
-        var unitSold = Double(priceSold.text!)
-        if unitSold == nil {
-            unitSold = 0
-        }
-        var q = Double(quantity.text!)
-        if q == nil {
-            q = 0
-        }
-        var scrn = Double(screenCharged.text!)
-        if scrn == nil {
-            scrn = 0
-        }
         let result = unitSold! * q! + scrn!
         return result
     }
@@ -87,18 +99,7 @@ class ViewController: UIViewController {
     }
     
     func calculateTotalCost()->Double {
-        var unitPrice = Double(unit.text!)
-        if unitPrice == nil {
-            unitPrice = 0
-        }
-        var q = Double(quantity.text!)
-        if q == nil {
-            q = 0
-        }
-        var screenH = Double(screenHouse.text!)
-        if screenH == nil {
-            screenH = 0
-        }
+  
         var shipC = Double(shipCo.text!)
         if shipC == nil {
             shipC = 0
@@ -116,7 +117,7 @@ class ViewController: UIViewController {
         if shipCost == nil {
             shipCost = 0
         }
-        let result = (q! * unitPrice!) + screenH! + (houseCost! * q!) + shipC! + shipCost! + taxCost!
+        let result = (q! * unitPrice) + screenH! + (houseCost! * q!) + shipC! + shipCost! + taxCost!
         return result
     }
     
@@ -143,14 +144,6 @@ class ViewController: UIViewController {
     }
     
     func calculateActualUnit()->Double {
-        var q = Double(quantity.text!)
-        if q == nil {
-            q = 0
-        }
-        var scrn = Double(screenCharged.text!)
-        if scrn == nil {
-            scrn = 0
-        }
         var houseCost = Double(housePerUnit.text!)
         if houseCost == nil {
             houseCost = 0
@@ -175,24 +168,82 @@ class ViewController: UIViewController {
     
     func calculateActualComiss() -> Double {
         var actualUnitCharged = Double(actualUnitLabel.text!)
-        if actualUnitLabel == nil {
-            actualUnitLabel = 0
+        if actualUnitCharged == nil {
+            actualUnitCharged = 0
         }
-        let totalCost = calculateTotalCost()
-        let profit = calculateProfit()
+        var taxCost = Double(taxLabel.text!)
+        if taxCost == nil {
+            taxCost = 0
+        }
+        var chargedClient = Double(charged.text!)
+        if chargedClient == nil {
+            chargedClient = 0
+        }
+
+        let subTotal = actualUnitCharged! * q! + scrn!
+        let subTotalTax = subTotal * 0.08875
         
+        let totalCost = calculateTotalCost() - (taxCost! - subTotalTax)
+        let profit = chargedClient! - totalCost
+        let comission = profit/2
         
-        
+        return comission
     }
     
+    func calculateTotalCharged() -> Double {
+        return (unitSold * q) + scrn + shipCost
+    }
+    
+    
+    
     @IBAction func calculateAll(sender: AnyObject) {
-        companyCost.text = String(calculateCompanyCost())
-        subTotalLabel.text = String(calculateSubTotal())
-        taxLabel.text = String(calculateTax())
-        totalCostLabel.text = String(calculateTotalCost())
-        profitLabel.text = String(calculateProfit())
-        commissionLabel.text = String(calculateCommission())
-        actualUnitLabel.text = String(calculateActualUnit())
+        //charged.text = String(round(calculateTotalCharged() * 100) / 100)
+        companyCost.text = String(round(calculateCompanyCost() * 100) / 100)
+        subTotalLabel.text = String(round(calculateSubTotal() * 100) / 100)
+        taxLabel.text = String(round(calculateTax() * 100) / 100)
+        totalCostLabel.text = String(round(calculateTotalCost() * 100) / 100)
+        profitLabel.text = String(round(calculateProfit() * 100) / 100)
+        commissionLabel.text = String(round(calculateCommission() * 100) / 100)
+        actualUnitLabel.text = String(round(calculateActualUnit() * 10000) / 10000)
+        actualCommissionLabel.text = String(round(calculateActualComiss() * 100) / 100)
+        
+        let comissionAlert = UIAlertController(title: actualCommissionLabel.text!, message: "IS THE COMMISSION", preferredStyle: UIAlertControllerStyle.Alert)
+        comissionAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(comissionAlert, animated: true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+
+    @IBAction func clearAll(sender: AnyObject) {
+        quantity.text = ""
+        unit.text = ""
+        priceSold.text = ""
+        screenHouse.text = ""
+        referenceUnit.text = ""
+        code.text = ""
+        reference.text = ""
+        companyCost.text = ""
+        charged.text = ""
+        housePerUnit.text = ""
+        shipCo.text = ""
+        shipping.text = ""
+        taxLabel.text = ""
+        subTotalLabel.text = ""
+        totalCostLabel.text = ""
+        profitLabel.text = ""
+        commissionLabel.text = ""
+        actualUnitLabel.text = ""
+        actualCommissionLabel.text = ""
+        screenCharged.text = ""
+        q = 0.0
+        unitPrice = 0.0
+        unitSold = 0.0
+        scrn = 0.0
+        screenH = 0.0
+        
     }
 
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -202,7 +253,46 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        companyCost.layer.borderWidth = 2.0
+        companyCost.layer.cornerRadius = 8
+        
+        subTotalLabel.layer.borderWidth = 2.0
+        subTotalLabel.layer.cornerRadius = 8
+        
+        taxLabel.layer.borderWidth = 2.0
+        taxLabel.layer.cornerRadius = 8
+        
+        totalCostLabel.layer.borderWidth = 2.0
+        totalCostLabel.layer.cornerRadius = 8
+        
+        profitLabel.layer.borderWidth = 2.0
+        profitLabel.layer.cornerRadius = 8
+        
+        commissionLabel.layer.borderWidth = 2.0
+        commissionLabel.layer.cornerRadius = 8
+        
+        actualCommissionLabel.layer.borderWidth = 5.0
+        actualCommissionLabel.layer.borderColor = UIColor.blueColor().CGColor
+        
+        referenceUnit.layer.borderWidth = 2.0
+        referenceUnit.layer.cornerRadius = 8
+        
+        actualUnitLabel.layer.borderWidth = 2.0
+        actualUnitLabel.layer.cornerRadius = 8
+        
+        self.reference.delegate = self
+        self.code.delegate = self
+        self.unit.delegate = self
+        self.priceSold.delegate = self
+        self.quantity.delegate = self
+        self.screenHouse.delegate = self
+        self.screenCharged.delegate = self
+        self.shipCo.delegate = self
+        self.shipping.delegate = self
+        self.charged.delegate = self
+        self.housePerUnit.delegate = self
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
