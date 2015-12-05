@@ -143,6 +143,10 @@ class OrderViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
+        
         grandTotalLable.layer.borderWidth = 5.0
         grandTotalLable.layer.borderColor = UIColor.blueColor().CGColor
         
@@ -165,6 +169,13 @@ class OrderViewController: UIViewController, UITextFieldDelegate {
         self.itemThreeTextField.delegate = self
     }
 
+    func keyboardWillShow(sender: NSNotification) {
+        self.view.frame.origin.y -= 140
+    }
+    func keyboardWillHide(sender: NSNotification) {
+        self.view.frame.origin.y += 140
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
