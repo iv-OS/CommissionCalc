@@ -73,10 +73,6 @@ class OrderViewController: UIViewController, UITextFieldDelegate {
         return result
     }
     
-    @IBAction func calculateTax(sender: AnyObject) {
-        taxLabel.text = String(round(calculateTax()*100)/100)
-    }
-    
     func calculateGrandTotal() -> Double {
         var tax = Double(taxLabel.text!)
         if tax == nil {tax = 0}
@@ -96,6 +92,43 @@ class OrderViewController: UIViewController, UITextFieldDelegate {
         grandTotalLable.text = String(round(calculateGrandTotal()*100)/100)
     }
     
+    @IBAction func calculateTax(sender: UISwitch) {
+        if sender.on {
+            taxLabel.text = String(round(calculateTax()*100)/100)
+            calculateAll(UISwitch)
+        } else {
+            taxLabel.text = String(0.0)
+            
+            let grandTotal = calculateGrandTotal() + calculateTax()
+            
+            let tax = calculateTax()
+            
+            let result = grandTotal - tax
+            
+            grandTotalLable.text = String(result)
+        }
+
+    }
+    @IBAction func clearAll(sender: AnyObject) {
+        itemThreeTextField.text = ""
+        itemTwoTextField.text = ""
+        itemOneTextField.text = ""
+        quantityOne.text = ""
+        priceOne.text = ""
+        quantityTwo.text = ""
+        priceTwo.text = ""
+        priceThree.text = ""
+        quantityThree.text = ""
+        totalOne.text = ""
+        totalTwo.text = ""
+        totalThree.text = ""
+        ExtraChargeLabel.text = ""
+        subTotalLabel.text = ""
+        taxLabel.text = ""
+        shippingTextField.text = ""
+        grandTotalLable.text = ""
+    }
+
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
     }

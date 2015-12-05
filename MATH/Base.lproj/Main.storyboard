@@ -1069,7 +1069,7 @@
                                 <rect key="frame" x="262" y="189" width="51" height="31"/>
                                 <animations/>
                                 <connections>
-                                    <action selector="calculateTax:" destination="KB5-gS-Qcp" eventType="valueChanged" id="VuF-fo-fKR"/>
+                                    <action selector="calculateTax:" destination="KB5-gS-Qcp" eventType="valueChanged" id="cCJ-z8-s42"/>
                                 </connections>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6hv-hg-abt">
@@ -1079,6 +1079,14 @@
                                 <state key="normal" title="Calculate"/>
                                 <connections>
                                     <action selector="calculateAll:" destination="KB5-gS-Qcp" eventType="touchUpInside" id="hFx-g8-LNq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D3B-Dh-3b0">
+                                <rect key="frame" x="244" y="525" width="36" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Clear"/>
+                                <connections>
+                                    <action selector="clearAll:" destination="KB5-gS-Qcp" eventType="touchUpInside" id="aDX-Zd-cOP"/>
                                 </connections>
                             </button>
                         </subviews>
