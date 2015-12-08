@@ -8,8 +8,26 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController, UITextFieldDelegate, UIApplicationDelegate {
+    
+   /*
+    override func shouldAutorotate() -> Bool {
+        if (UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft ||
+            UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight ||
+            UIDevice.currentDevice().orientation == UIDeviceOrientation.Unknown ||
+            UIDevice.currentDevice().orientation == UIDeviceOrientation.PortraitUpsideDown) {
+                return false
+        }
+        else {
+            return true
+        }
+    }
 
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return [UIInterfaceOrientationMask.Portrait]
+    }
+    */
+    
     
     @IBOutlet weak var screenHouse: UITextField!
     @IBOutlet weak var priceSold: UITextField!
@@ -253,9 +271,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
         
         companyCost.layer.borderWidth = 2.0
         companyCost.layer.cornerRadius = 8
@@ -295,13 +310,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         self.shipping.delegate = self
         self.charged.delegate = self
         self.housePerUnit.delegate = self
-    }
-    
-    func keyboardWillShow(sender: NSNotification) {
-        self.view.frame.origin.y -= 200
-    }
-    func keyboardWillHide(sender: NSNotification) {
-        self.view.frame.origin.y += 200
+
     }
 
     override func didReceiveMemoryWarning() {

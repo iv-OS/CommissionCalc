@@ -12,7 +12,18 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+        
+        /*func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> Int {
+            
+            if (self.blockRotation) {
+                print("supportedInterfaceOrientations - PORTRAIT")
+                return Int(UIInterfaceOrientationMask.Portrait.rawValue)
+            } else {
+                print("supportedInterfaceOrientations - ALL")
+                return Int(UIInterfaceOrientationMask.All.rawValue)
+            }
+        }
+    */
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.

@@ -94,10 +94,8 @@ class QuotesViewController: UIViewController, UITextFieldDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
+        // Do any additional setup after loading the view, typically from a nib.
         
         totalLabel.layer.borderWidth = 2.0
         totalLabel.layer.cornerRadius = 8
@@ -113,13 +111,7 @@ class QuotesViewController: UIViewController, UITextFieldDelegate {
         self.screenTextField.delegate = self
         self.shippingTextField.delegate = self
     }
-    
-    func keyboardWillShow(sender: NSNotification) {
-        self.view.frame.origin.y -= 160
-    }
-    func keyboardWillHide(sender: NSNotification) {
-        self.view.frame.origin.y += 160
-    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

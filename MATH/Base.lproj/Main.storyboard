@@ -229,6 +229,8 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ekg-To-WK6">
                                 <rect key="frame" x="22" y="133" width="35" height="30"/>
                                 <animations/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <size key="titleShadowOffset" width="2" height="1"/>
                                 <state key="normal" title="Price"/>
                                 <connections>
                                     <action selector="calculateUnitPrice:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fIf-iN-nPv"/>
@@ -445,7 +447,7 @@
                             </label>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.79247826337814331" green="0.91951292753219604" blue="0.91578918695449829" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="T21-BV-DbV" firstAttribute="leading" secondItem="A7d-u5-wYT" secondAttribute="leading" id="1Cb-MR-gt2"/>
                             <constraint firstItem="T21-BV-DbV" firstAttribute="trailing" secondItem="8j5-wY-eM1" secondAttribute="trailing" id="2Nz-cg-HlC"/>
@@ -610,10 +612,10 @@
             </objects>
             <point key="canvasLocation" x="926" y="99"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Custom Navigation Controller View Controller-->
         <scene sceneID="zqm-Ts-ZI2">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="M5d-GE-EP9" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="M5d-GE-EP9" customClass="customNavigationControllerViewController" customModule="MATH" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Vdw-x4-EEm">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -627,7 +629,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DDf-dr-gyF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-420" y="99"/>
+            <point key="canvasLocation" x="-420" y="94"/>
         </scene>
         <!--Quotes View Controller-->
         <scene sceneID="AGR-YU-lBi">
